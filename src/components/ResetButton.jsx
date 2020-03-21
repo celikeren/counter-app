@@ -20,9 +20,6 @@ class ResetButton extends Component {
   }
 
   reset = () => {
-    this.setState({
-      counter: 0
-    });
     this.props.resetMethod();
   }
 

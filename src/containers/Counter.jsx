@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import './Counter.css';
 import CounterButton from '../components/CounterButton';
 import CounterBoard from '../components/CounterBoard';
 import ResetButton from '../components/ResetButton';
-import propTypes from 'prop-types'
+import propTypes from 'prop-types';
 
 class Counter extends Component {
 
@@ -18,22 +19,37 @@ class Counter extends Component {
 
   render() {
     return (
-      <div className="Counter">
-        <CounterButton incrementMethod={this.increment} />
-        <CounterButton by={5} incrementMethod={this.increment} />
-        <CounterButton by={10} incrementMethod={this.increment} />
-        <ResetButton resetMethod={this.reset}/>
-        <CounterBoard counter={this.state.counter}/>
+      <div className="counter">
+        <CounterBoard counter={this.state.counter} />
+        <div className="grid">
+          <CounterButton incrementMethod={this.increment} />
+          <CounterButton by={'+5'} incrementMethod={this.increment} />
+          <CounterButton by={'+10'} incrementMethod={this.increment} />
+          <CounterButton by={-1} incrementMethod={this.increment} />
+          <CounterButton by={-5} incrementMethod={this.increment} />
+          <CounterButton by={-10} incrementMethod={this.increment} />
+        </div>
+        <ResetButton resetMethod={this.reset} />
       </div>
     );
   }
 
+  /* with this.state
+    increment = (by) => {
+      this.setState({
+        counter: this.state.counter + by
+      });
+    }
+  */
 
+
+  // with prevState
   increment = (by) => {
-    console.log(`increment by: ${by}`);
-    this.setState({
-      counter: this.state.counter + by
-    });
+    this.setState(
+      (prevState) => {
+        var b = parseInt(by, 10);
+        return { counter: prevState.counter + b }
+      });
   }
 
   reset = () => {
@@ -45,11 +61,13 @@ class Counter extends Component {
 }
 
 CounterButton.defaultProps = {
-  by: 1
+  by: '+1'
 }
 
+/*
 CounterButton.propTypes = {
   by: propTypes.number
 }
+*/
 
 export default Counter;
